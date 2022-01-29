@@ -47,7 +47,7 @@ In order for Terraform to leverage the TerraServices module, an S3 Backend must 
 
 To provision the Terraform Back-End resources:
 
-** Note: if the AWS Account you are working in already has an IAM Alias, comment out lines 4 -7 in *main.tf* as the first resource provisions a alias, which is used to standardize naming conventions in subsequent modules.**
+**Note: if the AWS Account you are working in already has an IAM Alias, comment out lines 4 -7 in *main.tf* as the first resource provisions a alias, which is used to standardize naming conventions in subsequent modules.**
 
 1. Navigate to the *backend* directory in your terminal
 3. Open the **variables.tf** file and update the default value of the *account_alias* and *bucket_name* variables to the desired AWS Account Alias and S3 Bucket name, respectively.
