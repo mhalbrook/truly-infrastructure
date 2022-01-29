@@ -78,11 +78,11 @@ To provision the Terraform Back-End resources:
 
 3. Note the *backend_bucket_name* output displayed after *terraform apply* completes, this will be used in the next section to update the Terraform Back-End configuration. the output will look similar to this:
 
-                Apply complete! Resources: 5 added, 0 changed, 0 destroyed.
+        Apply complete! Resources: 5 added, 0 changed, 0 destroyed.
 
-                Outputs:
+        Outputs:
 
-                backend_bucket_name = "us-east-1-halbromr-terraform-state-backend"
+        backend_bucket_name = "us-east-1-halbromr-terraform-state-backend"
 
 
 
@@ -107,9 +107,9 @@ To provision the Logging resources:
 1. Navigate to the *core/logging* directory in your terminal
 2. Run the following commands:
 
-                terraform workspace new leveraged
-                terraform init
-                terraform apply
+        terraform workspace new leveraged
+        terraform init
+        terraform apply
 
 
 ##### Route53 Hosted Zone
@@ -125,30 +125,30 @@ To provision the Route53 Hosted Zone:
 3. Update the default value of the *domain* variable to the name of the domain on which the service(s) will run.
 4. Run the following commands:
 
-                terraform workspace new leveraged
-                terraform init
-                terraform apply
+        terraform workspace new leveraged
+        terraform init
+        terraform apply
 
 5. Note the *name_server_record_values* output displayed after *terraform apply* completes, this will be used in the next section to update the Domain Name Servers. the output will look similar to this:
 
-                Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
+        Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
 
-                Outputs:
+        Outputs:
 
-                name_server_record_values = [
-                toset([
-                    "ns-1019.awsdns-63.net",
-                    "ns-1044.awsdns-02.org",
-                    "ns-1677.awsdns-17.co.uk",
-                    "ns-169.awsdns-21.com",
-                ]),
-                ]
+        name_server_record_values = [
+            toset([
+                "ns-1019.awsdns-63.net",
+                "ns-1044.awsdns-02.org",
+                "ns-1677.awsdns-17.co.uk",
+                "ns-169.awsdns-21.com",
+            ]),
+        ]
 
 **If you are connecting the Hosted Zone to a Domain registered with AWS Route53:**
 
 6. Connect the Domain to the Hosted Zone by running the following command:
 
-                aws route53domains update-domain-nameservers --domain-name {{domain}} --nameservers Name={{ns1}} Name={{ns2}} Name={{ns3}} Name={{ns4}} 
+        aws route53domains update-domain-nameservers --domain-name {{domain}} --nameservers Name={{ns1}} Name={{ns2}} Name={{ns3}} Name={{ns4}} 
 
 where {{domain}} is the name of the domain being updated and {{ns1}} - {{ns4}} are the values of the *name_server_record_values* Output received after running *terraform apply* in the previous step.
 
@@ -170,9 +170,9 @@ To provision the certificate:
     * This should be the apex domain or a sub-domain of the Hosted Zone zone provisioned in the previous step.
 4. Run the following commands:
 
-                terraform workspace new leveraged
-                terraform init
-                terraform apply
+        terraform workspace new leveraged
+        terraform init
+        terraform apply
 
 
 ##### VPC
@@ -182,9 +182,9 @@ To provision the VPC:
 1. Navigate to the *core/vpc* directory in your terminal.
 4. Run the following commands:
 
-                terraform workspace new truly
-                terraform init
-                terraform apply
+        terraform workspace new truly
+        terraform init
+        terraform apply
 
 
 
@@ -195,19 +195,19 @@ To provision the service:
 1. Navigate to the *service/truly* directory in your terminal.
 2. Run the following commands:
 
-                terraform workspace new truly
-                terraform init
-                terraform apply
+        terraform workspace new truly
+        terraform init
+        terraform apply
 
 **If the **Hosted Zone** and **Certificates** sections were skipped:**
  
 3. Note the *load_balancer_domain_name* Output received after running *terraform apply* in the previous step. This is the domain that will be used to connect to the application in the *Testing the Application* and *Updating the Message* sections. the output will look similar to this:
 
-                Apply complete! Resources: 43 added, 0 changed, 0 destroyed.
+        Apply complete! Resources: 43 added, 0 changed, 0 destroyed.
 
-                Outputs:
+        Outputs:
 
-                load_balancer_domain_name = "truly-clojure-demo-alb-xxxxxxxxxxxx.us-east-1.elb.amazonaws.com"
+        load_balancer_domain_name = "truly-clojure-demo-alb-xxxxxxxxxxxx.us-east-1.elb.amazonaws.com"
 
 
 ### Building the Container Image
@@ -216,25 +216,25 @@ Now that the supporting infrastructure is in place, we can use AWS CodeBuild to 
 To build the image, run the following command from your terminal:
 * **Note: the below AWS CLI command assumes the use of the *Default* AWS Profile for authentication. To use a Custom Profile, add *--profile {{custom-profile}}* to the command where {{custom_profile}} is the name of the name of the Custom profile.**
 
-                aws codebuild start-build --project-name truly-clojure-demo --region us-east-1 --query 'build.id'
+        aws codebuild start-build --project-name truly-clojure-demo --region us-east-1 --query 'build.id'
     
     The CLI will output the ID of the build, which can be used with the below CLI command to periodically check the status of the build:
 
-                aws codebuild batch-get-builds --ids {{build_id}} --region us-east-1 --query 'builds[*].currentPhase' 
+        aws codebuild batch-get-builds --ids {{build_id}} --region us-east-1 --query 'builds[*].currentPhase' 
 
     When the build is complete, the following output will be presented:
 
-                [
-                    "COMPLETED"
-                ]
+        [
+            "COMPLETED"
+        ]
 
     You can then run the following command to verify that the ECS Fargate service is running:
 
-                aws ecs wait services-stable --cluster truly-clojure-demo --services truly-clojure-demo --region us-east-1
+        aws ecs wait services-stable --cluster truly-clojure-demo --services truly-clojure-demo --region us-east-1
 
     The command will not present an output until the ECS Fargate Task reaches a Running State. If a considerable amount of time has passed between deploying the service and completing the initial build, there may be a delay in Fargate attempting to launch the task. In this instance, the following command can be run to expedite the initial deployment:
 
-                aws ecs update-service --cluster truly-clojure-demo --service truly-clojure-demo --force-new-deployment --region us-east-1 
+        aws ecs update-service --cluster truly-clojure-demo --service truly-clojure-demo --force-new-deployment --region us-east-1 
 
 
 ### Testing
@@ -246,7 +246,7 @@ If the **Certificate Section** was skipped, navigate to the *load_balancer_domai
 
 The following text should be printed in the browser:
 
-                {"message": "Hello Truly!"}
+        {"message": "Hello Truly!"}
 
 *If the message is not presented, verify that all Terraform Modules have been deployed and that the Fargate Tasks are running.*
 
@@ -258,17 +258,17 @@ By default, the application will print the message "Hello Truly!". this message 
 
 To update the message, run the following command from your terminal:
 
-                aws ssm put-parameter --name "/appconfig/MESSAGE" --value "{{Your Message}}" --overwrite --region us-east-1
+        aws ssm put-parameter --name "/appconfig/MESSAGE" --value "{{Your Message}}" --overwrite --region us-east-1
 
 *where {{your message}} is the message that you would like the application to present.*
 
 Then, re-deploy the Fargate Service by running the following command:
 
-                aws ecs update-service --cluster truly-clojure-demo --service truly-clojure-demo --force-new-deployment --region us-east-1 
+        aws ecs update-service --cluster truly-clojure-demo --service truly-clojure-demo --force-new-deployment --region us-east-1 
 
 You can then run the following command to verify that the ECS Fargate service deployment has completed:
 
-                aws ecs wait services-stable --cluster truly-clojure-demo --services truly-clojure-demo --region us-east-1
+        aws ecs wait services-stable --cluster truly-clojure-demo --services truly-clojure-demo --region us-east-1
 
 * **Note: The command will not present an output until the deployment has completed.**
 
@@ -285,12 +285,12 @@ To destroy the infrastructure, run the following commands in each module in the 
 
 commands for *services/truly* and *core/vpc*:
 
-                terraform destroy
-                terraform workspace select default
-                terraform workspace delete truly
+        terraform destroy
+        terraform workspace select default
+        terraform workspace delete truly
 
 commands for all other modules:
 
-                terraform destroy
-                terraform workspace select default
-                terraform workspace delete leveraged
+        terraform destroy
+        terraform workspace select default
+        terraform workspace delete leveraged
