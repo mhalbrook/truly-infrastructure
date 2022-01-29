@@ -98,7 +98,7 @@ In order to reach the service via a Public Domain, a Route53 Hosted Zone must be
 
 * **Note: this module may be skipped if you do not have a domain with which to associate the Hosted Zone. If this module is skipped, the *certificates* module should also be skipped.**
 
-* **Note: if you are using a domain that is not registered with AWS Route53, ensure the hosted zone is configured as a sub-domain (i.e.sub.example.com *not* example.com.** 
+* **Note: if you are using a domain that is not registered with AWS Route53, ensure the hosted zone is configured as a sub-domain (i.e. sub.example.com *not* example.com).** 
 
 To provision the Route53 Hosted Zone:
 1. Navigate to the *core/hosted_zones* directory in your terminal.
@@ -125,12 +125,13 @@ To provision the Route53 Hosted Zone:
                 ]),
                 ]
 
-*If you are connecting the Hosted Zone to a Domain registered with AWS Route53: 
+* If you are connecting the Hosted Zone to a Domain registered with AWS Route53: 
+
 6. Connect the Domain to the Hosted Zone by running the following command:
 
                 aws route53domains update-domain-nameservers --domain-name <domain> --nameservers Name=<ns1> Name=<ns2> Name=<ns3> Name=<ns4> 
 
-    where <domain> is the name of the domain being updated and <ns1> - <ns4> are the *backend_bucket_name Output* received after running *terraform apply* in the previous step.
+where <domain> is the name of the domain being updated and <ns1> - <ns4> are the *backend_bucket_name Output* received after running *terraform apply* in the previous step.
 
 * ** Note: the above AWS CLI command assumes the use of the *Default* AWS Profile for authentication. To use a Custom Profile, add *--profile <custom-profile>* to the command where <custom_profile> is the name of the name of the Custom profile.
 
