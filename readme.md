@@ -72,9 +72,9 @@ To provision the Terraform Back-End resources:
 3. Open the **variables.tf** file and update the default value of the *account_alias* and *bucket_name* variables to the desired AWS Account Alias and S3 Bucket name, respectively.
 2. Run the following commands:
 
-                terraform workspace new leveraged
-                terraform init
-                terraform apply
+        terraform workspace new leveraged
+        terraform init
+        terraform apply
 
 3. Note the *backend_bucket_name* output displayed after *terraform apply* completes, this will be used in the next section to update the Terraform Back-End configuration. the output will look similar to this:
 
