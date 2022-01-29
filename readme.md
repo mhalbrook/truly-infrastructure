@@ -5,30 +5,41 @@
 
 Description
 
-|- AWS Resources
+* AWS Resources
 
-|- Requirements
+* Requirements
 
 Usage
 
-|- Deploying the Infrastructure
+* Deploying the Infrastructure
 
-|-- Creating the Terraform Back-End
+    * Creating the Terraform Back-End
 
-|--- Updating the Terraform Back-End Configurations
+        * Updating the Terraform Back-End Configurations
 
-|--- Deploying the Core Infrastructure
-######## Logging Resources
-######## Certificate
-######## VPC
-######## Route53 Hosted Zone
-######## Route53 Hosted Zone
-####### Deploying the Service Infrastructure
-####### Building the Container Image
-###### Testing
-####### Testing the Application
-####### Updating the Message
-###### Tear Down
+    * Deploying the Core Infrastructure
+
+        * Logging Resources
+
+        * Certificate
+
+        * VPC
+
+        * Route53 Hosted Zone
+
+        * Route53 Hosted Zone
+
+    * Deploying the Service Infrastructure
+
+    * Building the Container Image
+
+    * Testing
+
+        * Testing the Application
+
+        * Updating the Message
+        
+    * Tear Down
 
 
 ## Description
