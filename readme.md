@@ -287,11 +287,11 @@ To test that commands can be sent to the container, run the following command:
 
         aws ecs list-tasks --cluster truly-clojure-demo --service truly-clojure-demo --region us-east-1
 
-The CLI will output the ID of the running ECS Task, which can be used with the below CLI command to list the contents of the container:
+The CLI will output the ID of the running ECS Task, which can be used with the below CLI command to runs the *ls* command and list the contents of the container:
 
         aws ecs execute-command --cluster truly-clojure-demo --task {{task_arn}} --container truly-clojure-demo --interactive --command 'ls'  --region us-east-1  
 
-*where {{task_arn}} is the Task ARN that was presented in the output of the previous command.*
+*where {{task_arn}} is the ARN of the ECS Task that was presented in the output of the previous command.*
 
 The following output should be presented:
 
