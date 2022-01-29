@@ -1,10 +1,10 @@
 #############################################################
 # Account IAM Alias
 #############################################################
-# resource "aws_iam_account_alias" "alias" {
-#   provider      = aws
-#   account_alias = var.account_alias
-# }
+resource "aws_iam_account_alias" "alias" {
+  provider      = aws
+  account_alias = var.account_alias
+}
 
 
 ##########################################################
