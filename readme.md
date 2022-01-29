@@ -131,13 +131,13 @@ To provision the Route53 Hosted Zone:
 
                 aws route53domains update-domain-nameservers --domain-name {{domain}} --nameservers Name={{ns1}} Name={{ns2}} Name={{ns3}} Name={{ns4}} 
 
-where {{domain}} is the name of the domain being updated and {{ns1}} - {{ns4}} are the *backend_bucket_name Output* received after running *terraform apply* in the previous step.
+where {{domain}} is the name of the domain being updated and {{ns1}} - {{ns4}} are the values of the *name_server_record_values* Output received after running *terraform apply* in the previous step.
 
 * **Note: the above AWS CLI command assumes the use of the *Default* AWS Profile for authentication. To use a Custom Profile, add *--profile {{custom-profile}}* to the command where {{custom_profile}} is the name of the name of the Custom Profile.**
 
 **If you are *NOT* connecting the Hosted Zone to a Domain registered with AWS Route53:** 
 
-6. Create a new **NS** DNS Record in the DNS Zone associated with your domain and set the record value to the *backend_bucket_name Output* received after running *terraform apply* in the previous step. 
+6. Create a new **NS** DNS Record in the DNS Zone associated with your domain and set the record value to the *name_server_record_values* Output received after running *terraform apply* in the previous step. 
     * Consult online documentation for you DNS Provider for instructions on how to do this.
 
 
