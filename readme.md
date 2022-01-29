@@ -129,11 +129,11 @@ To provision the Route53 Hosted Zone:
 
 6. Connect the Domain to the Hosted Zone by running the following command:
 
-                aws route53domains update-domain-nameservers --domain-name <domain> --nameservers Name=<ns1> Name=<ns2> Name=<ns3> Name=<ns4> 
+                aws route53domains update-domain-nameservers --domain-name {{domain}} --nameservers Name={{ns1}} Name={{ns2}} Name={{ns3}} Name={{ns4}} 
 
-where {{domain}} is the name of the domain being updated and <ns1> - <ns4> are the *backend_bucket_name Output* received after running *terraform apply* in the previous step.
+where {{domain}} is the name of the domain being updated and {{ns1}} - {{ns4}} are the *backend_bucket_name Output* received after running *terraform apply* in the previous step.
 
-* **Note: the above AWS CLI command assumes the use of the *Default* AWS Profile for authentication. To use a Custom Profile, add *--profile <custom-profile>* to the command where <custom_profile> is the name of the name of the Custom Profile.**
+* **Note: the above AWS CLI command assumes the use of the *Default* AWS Profile for authentication. To use a Custom Profile, add *--profile {{custom-profile}}* to the command where {{custom_profile}} is the name of the name of the Custom Profile.**
 
 **If you are *NOT* connecting the Hosted Zone to a Domain registered with AWS Route53:** 
 
@@ -186,13 +186,13 @@ If the **Hosted Zone** and **Certificates** sections were skipped, note the *loa
 Now that the supporting infrastructure is in place, we can use AWS CodeBuild to build and push the container image to AWS Elastic Container Registry (ECR). Once in ECR, the Fargate service will be able to pull and run the image.
 
 To build the image, run the following command from your terminal:
-* ** Note: the below AWS CLI command assumes the use of the *Default* AWS Profile for authentication. To use a Custom Profile, add *--profile <custom-profile>* to the command where <custom_profile> is the name of the name of the Custom profile.
+* ** Note: the below AWS CLI command assumes the use of the *Default* AWS Profile for authentication. To use a Custom Profile, add *--profile {{custom-profile}}* to the command where {{custom_profile}} is the name of the name of the Custom profile.
 
                 aws codebuild start-build --project-name truly-clojure-demo --region us-east-1 --query 'build.id'
     
     The CLI will output the ID of the build, which can be used with the below CLI command to periodically check the status of the build:
 
-                aws codebuild batch-get-builds --ids <build_id> --region us-east-1 --query 'builds[*].currentPhase' 
+                aws codebuild batch-get-builds --ids {{build_id}} --region us-east-1 --query 'builds[*].currentPhase' 
 
     When the build is complete, the following output will be presented:
 
@@ -222,13 +222,13 @@ If the message is not presented, verify that all Terraform Modules have been dep
 ### Updating the Message
 By default, the application will print the message "Hello Truly!". this message is passed to the application via an Systems Manager Parameter. We can update the parameter to present a new message and redeploy the Fargate Service without making any adjustments to the application code or the Docker commands that initialize the container.
 
-* ** Note: the below AWS CLI command assumes the use of the *Default* AWS Profile for authentication. To use a Custom Profile, add *--profile <custom-profile>* to the command where <custom_profile> is the name of the name of the Custom profile.
+* ** Note: the below AWS CLI command assumes the use of the *Default* AWS Profile for authentication. To use a Custom Profile, add *--profile {{custom-profile}}* to the command where {{custom_profile}} is the name of the name of the Custom profile.
 
 To update the message, run the following command from your terminal:
 
-                aws ssm put-parameter --name "/appconfig/MESSAGE" --value "<Your Message>" --overwrite --region us-east-1
+                aws ssm put-parameter --name "/appconfig/MESSAGE" --value "{{Your Message}}" --overwrite --region us-east-1
 
-where <your message> is the message that you would like the application to present.
+where {{your message}} is the message that you would like the application to present.
 
 Then, re-deploy the Fargate Service by running the following command:
 
