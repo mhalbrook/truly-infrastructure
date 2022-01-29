@@ -142,13 +142,13 @@ where {{domain}} is the name of the domain being updated and {{ns1}} - {{ns4}} a
 
 
 ##### Certificate
-In order for make an https connection to the service, a certificate must be provisioned and attached to the ALB that serves requests to the Fargate Service. This module will provision and validate a certificate, using the Hosted Zone provisioned in the previous section.
+In order to make an https connection to the service, a certificate must be provisioned and attached to the ALB that serves requests to the Fargate Service. This module will provision and validate a certificate, using the Hosted Zone provisioned in the previous section.
 
 To provision the certificate:
 1. Navigate to the *core/certificates* directory in your terminal.
 2. Open the *variables.tf* file
 3. Update the default value of the *truly_domain* variable to the name of the domain you wish to use when connecting to the service.
-    * This should be the apex domain or sub-domain of the Hosted Zone zone provisioned in the previous step.
+    * This should be the apex domain or a sub-domain of the Hosted Zone zone provisioned in the previous step.
 4. Run the following commands:
 
                 terraform workspace new leveraged
@@ -157,7 +157,7 @@ To provision the certificate:
 
 
 ##### VPC
-The Fargate Service must be run inside a Virtual Private Cloud. This module will deploy a 3-tiered VPC with the required NACL Rules, Routes.
+The Fargate Service must be run inside a Virtual Private Cloud. This module will deploy a 3-tiered VPC with the required NACL Rules and Routes.
 
 To provision the VPC:
 1. Navigate to the *core/vpc* directory in your terminal.
@@ -169,7 +169,7 @@ To provision the VPC:
 
 
 #### Deploying the Service
-This module will deploy the resources required to build and run the service on ECS Fargate. An A DNS Record will be provisioned and pointed at an ALB, which will load balance the ECS Fargate Service that runs the containerized application. Additionally, An AWS CodeBuild Project and Elastic Container Registry Repository will be provisioned to allow us to build and store the Docker Image.
+This module will deploy the resources required to build and run the service on ECS Fargate. A DNS Record will be provisioned and pointed at the ALB, which will load balance the ECS Fargate Service that runs the containerized application. Additionally, An AWS CodeBuild Project and Elastic Container Registry Repository will be provisioned to allow us to build and store the Docker Image.
 
 To provision the service:
 1. Navigate to the *service/truly* directory in your terminal.
@@ -179,7 +179,9 @@ To provision the service:
                 terraform init
                 terraform apply
 
-If the **Hosted Zone** and **Certificates** sections were skipped, note the *load_balancer_domain_name Output* received after running *terraform apply* in the previous step. This is the domain that will be used to connect to the application in the *Testing the Application* and *Updating the Message* sections.
+**If the **Hosted Zone** and **Certificates** sections were skipped:**
+ 
+3. Note the *load_balancer_domain_name* Output received after running *terraform apply* in the previous step. This is the domain that will be used to connect to the application in the *Testing the Application* and *Updating the Message* sections.
 
 
 ### Building the Container
