@@ -10,7 +10,7 @@ This module deploys the infrastructure that hosts the truly-clojure-test service
 
 #### AWS Resources Deployed:
 
-    * S3 Bucket & KMS Key *(for ALB Access Logs)*
+    * S3 Bucket & KMS Key (for ALB Access Logs)
     * Route53 Public Hosted Zone
     * Public SSL Certificate
     * VPC
@@ -18,11 +18,11 @@ This module deploys the infrastructure that hosts the truly-clojure-test service
     * Application Load Balancer & Target Group
     * ECS Cluster
     * ECS Fargate Service
-    * Systems Manager Parameter *(for storing container environment variable)*
+    * Systems Manager Parameter (for storing container environment variable)
     * Elastic Container Registry Repository & KMS Key
     * CodeBuild Project 
     * CloudWatch Log Group for Application Logs
-    * Various IAM Roles and Policies *(to support service permissions)*
+    * Various IAM Roles and Policies (to support service permissions)
 
 
 ### Requirements:
@@ -34,16 +34,19 @@ This module deploys the infrastructure that hosts the truly-clojure-test service
         * The Terraform module assumes the use of the *Default* AWS Profile, however, instructions for using a custom profile are provided throughout.
     * AWS Account and IAM User
         * The IAM User must have permission to perform all actions required by the module. Given the number of required actions it may be simplest to provide the IAM user with the AdministratorAccess Policy, even if only temporarily.
+    * Registered, Public Domain
+        * This is not an actual requirement, however, without a registered domain, you will not be able to connect to the application over https and will instead need to connect via port 80 (http) to the domain of the Application Load Balancer that serves the application.
 
 
 ### Deploying the Infrastructure
-This module leverages the TerraServices module where the overall infrastructure is broken into multiple modules with references using Terraform remote State. This lessens maintenance and allows teams to make small configuration changes quickly with less risk. With this structure, the initial infrastructure deployment is broken into steps with a specific order.
+This module leverages the TerraServices module where the overall infrastructure is broken into multiple modules with references using Terraform Remote State. This lessens maintenance and allows teams to make small configuration changes quickly with less risk. With this structure, the initial infrastructure deployment is broken into steps with a specific order.
 
 
 #### Creating the Terraform Back-End
 In order for Terraform to leverage the TerraServices module, an S3 Backend must be used to store the generated State Files of each module. Additionally, a DynamoDB Table is required to ensure that state files are locked while Terraform provisions resources. 
 
 To provision the Terraform Back-End resources:
+
 ** Note: if the AWS Account you are working in already has an IAM Alias, comment out lines 4 -7 in *main.tf* as the first resource provisions a alias, which is used to standardize naming conventions in subsequent modules.**
 
 1. Navigate to the *backend* directory in your terminal
