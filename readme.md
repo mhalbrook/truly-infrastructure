@@ -194,7 +194,7 @@ To provision the service:
 Now that the supporting infrastructure is in place, we can use AWS CodeBuild to build and push the container image to AWS Elastic Container Registry (ECR). Once in ECR, the Fargate service will be able to pull and run the image.
 
 To build the image, run the following command from your terminal:
-* ** Note: the below AWS CLI command assumes the use of the *Default* AWS Profile for authentication. To use a Custom Profile, add *--profile {{custom-profile}}* to the command where {{custom_profile}} is the name of the name of the Custom profile.
+* **Note: the below AWS CLI command assumes the use of the *Default* AWS Profile for authentication. To use a Custom Profile, add *--profile {{custom-profile}}* to the command where {{custom_profile}} is the name of the name of the Custom profile.**
 
                 aws codebuild start-build --project-name truly-clojure-demo --region us-east-1 --query 'build.id'
     
@@ -218,25 +218,27 @@ To build the image, run the following command from your terminal:
 
 
 ### Testing the Application
-Once the container build has completed and Fargate has successfully launched the service, test the application by navigating to the domain that was configured in step 3 of the **Certificate Section** in the browser of your choice. If the **Certificate Section** was skipped, navigate to the *load_balancer_domain_name Output* received after running *terraform apply* in the **Deploying the Service Section**.
+Once the container build has completed and Fargate has successfully launched the service, test the application by navigating to the domain that was configured in Step 3 of the **Certificate Section** in the browser of your choice. 
+
+If the **Certificate Section** was skipped, navigate to the *load_balancer_domain_name* Output received after running *terraform apply* in the **Deploying the Service Section**.
 
 The following text should be printed in the browser:
 
                 {"message": "Hello Truly!"}
 
-If the message is not presented, verify that all Terraform Modules have been deployed and that the Fargate Tasks are running.
+*If the message is not presented, verify that all Terraform Modules have been deployed and that the Fargate Tasks are running.*
 
 
 ### Updating the Message
-By default, the application will print the message "Hello Truly!". this message is passed to the application via an Systems Manager Parameter. We can update the parameter to present a new message and redeploy the Fargate Service without making any adjustments to the application code or the Docker commands that initialize the container.
+By default, the application will print the message "Hello Truly!". this message is passed to the application via a Systems Manager Parameter. We can update the parameter to present a new message and redeploy the Fargate Service without making any adjustments to the application code or the Docker commands that initialize the container.
 
-* ** Note: the below AWS CLI command assumes the use of the *Default* AWS Profile for authentication. To use a Custom Profile, add *--profile {{custom-profile}}* to the command where {{custom_profile}} is the name of the name of the Custom profile.
+* **Note: the below AWS CLI commands assume the use of the *Default* AWS Profile for authentication. To use a Custom Profile, add *--profile {{custom-profile}}* to the command where {{custom_profile}} is the name of the name of the Custom profile.
 
 To update the message, run the following command from your terminal:
 
                 aws ssm put-parameter --name "/appconfig/MESSAGE" --value "{{Your Message}}" --overwrite --region us-east-1
 
-where {{your message}} is the message that you would like the application to present.
+*where {{your message}} is the message that you would like the application to present.*
 
 Then, re-deploy the Fargate Service by running the following command:
 
@@ -246,7 +248,7 @@ You can then run the following command to verify that the ECS Fargate service de
 
                 aws ecs wait services-stable --cluster truly-clojure-demo --services truly-clojure-demo --region us-east-1
 
-**Note: The command will not present an output until the deployment has completed.
+* **Note: The command will not present an output until the deployment has completed.**
 
 Once the deployment has completed, refresh the page in your browser to verify that the message has been updated.
 
@@ -255,7 +257,8 @@ Once the deployment has completed, refresh the page in your browser to verify th
 ### Tear Down
 Once the application functionality has been verified, the Terraform Modules may be destroyed. 
 
-To destroy the infrastructure run the following commands in each module in the reverse order in which they were applied (i.e. starting with *service/truly* and ending with *backend*)
+To destroy the infrastructure, run the following commands in each module in the reverse order in which they were applied (i.e. starting with *service/truly* and ending with *backend*)
+
 * **Note: if you with to destroy and re-deploy the infrastructure, do not destroy the *core/logging* or *backend* modules. These modules provision S3 Buckers, which exist in a global namespace, therefore, it may take up tot 24 hours for the S3 Bucket names to become available again after destruction.
 
 commands for *services/truly* and *core/vpc*:
