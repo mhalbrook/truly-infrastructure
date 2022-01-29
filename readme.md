@@ -96,9 +96,9 @@ To provision the Logging resources:
 ##### Route53 Hosted Zone
 In order to reach the service via a Public Domain, a Route53 Hosted Zone must be provisioned. This module will provision a Route53 Hosted Zone and output the Name Servers, which can be used to configure the domain.
 
-* **Note: this module may be skipped if you do not have a domain to to associate the Hosted Zone with. If this module is skipped, the *certificates* module should also be skipped.**
+* **Note: this module may be skipped if you do not have a domain with which to associate the Hosted Zone. If this module is skipped, the *certificates* module should also be skipped.**
 
-**Note: if you are using a domain that is not registered with AWS Route53, ensure the hosted zone is configured as a sub-domain (i.e.sub.example.com *not* example.com.** 
+* **Note: if you are using a domain that is not registered with AWS Route53, ensure the hosted zone is configured as a sub-domain (i.e.sub.example.com *not* example.com.** 
 
 To provision the Route53 Hosted Zone:
 1. Navigate to the *core/hosted_zones* directory in your terminal.
