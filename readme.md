@@ -21,6 +21,7 @@ Current Version: 1.0.0
         * Testing
             * Testing the Application
             * Updating the Message
+            * Running Docker Commands Against the Container
         * Tear Down
 
 
@@ -222,6 +223,8 @@ To build the image, run the following command from your terminal:
 
         aws codebuild batch-get-builds --ids {{build_id}} --region us-east-1 --query 'builds[*].currentPhase' 
 
+    where {[build_id]} is the ID that was presented in the output of the previous command.
+
     When the build is complete, the following output will be presented:
 
         [
@@ -274,6 +277,31 @@ You can then run the following command to verify that the ECS Fargate service de
 
 Once the deployment has completed, refresh the page in your browser to verify that the message has been updated.
 
+
+### Running Docker Commands Against the Container
+Since we are running the container on AWS Fargate, we do not have permission to connect to the host that manages the Docker Container, which can make troubleshooting application and container behavior more challenging. However, this Terraform module configures the ECS Fargate Service to enable ECS Exec, which allows us to leverage the AWS CLI to send docker exec commands to the host and receive responses.
+
+* **Note: the below AWS CLI commands assume the use of the *Default* AWS Profile for authentication. To use a Custom Profile, add *--profile {{custom-profile}}* to the command where {{custom_profile}} is the name of the name of the Custom profile.
+
+To test that commands can be sent to the container, run the following command:
+
+        aws ecs list-tasks --cluster truly-clojure-demo --service truly-clojure-demo --region us-east-1
+
+The CLI will output the ID of the running ECS Task, which can be used with the below CLI command to list the contents of the container:
+
+        aws ecs execute-command --cluster truly-clojure-demo --task {{task_arn}} --container truly-clojure-demo --interactive --command 'ls'  --region us-east-1  
+
+*where {{task_arn}} is the Task ARN that was presented in the output of the previous command.
+
+The following output should be presented:
+
+        The Session Manager plugin was installed successfully. Use the AWS CLI to start a session.
+
+        Starting session with SessionId: ecs-execute-command-xxxxxxxxxxxxxxxxx
+        This session is encrypted using AWS KMS.
+        clojure-app.jar
+
+We can see that the AWS CLI has established a session with the container, run the *ls* command, and outputted the contents of the container's root directory, which is the standalone JAR that was built by CodeBuild in the **Building the Container Image** section.
 
 
 ### Tear Down
