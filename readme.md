@@ -3,43 +3,25 @@
 
 ## Table of Contents
 
-Description
-
-* AWS Resources
-
-* Requirements
-
-Usage
-
-* Deploying the Infrastructure
-
-    * Creating the Terraform Back-End
-
-        * Updating the Terraform Back-End Configurations
-
-    * Deploying the Core Infrastructure
-
-        * Logging Resources
-
-        * Certificate
-
-        * VPC
-
-        * Route53 Hosted Zone
-
-        * Route53 Hosted Zone
-
-    * Deploying the Service Infrastructure
-
-    * Building the Container Image
-
-    * Testing
-
-        * Testing the Application
-
-        * Updating the Message
-
-    * Tear Down
+    Description
+    * AWS Resources
+    * Requirements
+    Usage
+    * Deploying the Infrastructure
+        * Creating the Terraform Back-End
+            * Updating the Terraform Back-End Configurations
+        * Deploying the Core Infrastructure
+            * Logging Resources
+            * Certificate
+            * VPC
+            * Route53 Hosted Zone
+            * Route53 Hosted Zone
+        * Deploying the Service Infrastructure
+        * Building the Container Image
+        * Testing
+            * Testing the Application
+            * Updating the Message
+        * Tear Down
 
 
 ## Description
@@ -47,19 +29,19 @@ This module deploys the infrastructure that hosts the truly-clojure-test service
 
 ### AWS Resources Provisioned:
 
-* S3 Bucket & KMS Key (for ALB Access Logs)
-* Route53 Public Hosted Zone
-* Public SSL Certificate
-* VPC
-* Route53 Record
-* Application Load Balancer & Target Group
-* ECS Cluster
-* ECS Fargate Service
-* Systems Manager Parameter (for storing container environment variable)
-* Elastic Container Registry Repository & KMS Key
-* CodeBuild Project 
-* CloudWatch Log Group for Application Logs
-* Various IAM Roles and Policies (to support service permissions)
+    * S3 Bucket & KMS Key (for ALB Access Logs)
+    * Route53 Public Hosted Zone
+    * Public SSL Certificate
+    * VPC
+    * Route53 Record
+    * Application Load Balancer & Target Group
+    * ECS Cluster
+    * ECS Fargate Service
+    * Systems Manager Parameter (for storing container environment variable)
+    * Elastic Container Registry Repository & KMS Key
+    * CodeBuild Project 
+    * CloudWatch Log Group for Application Logs
+    * Various IAM Roles and Policies (to support service permissions)
 
 ### Requirements:
     * Terraform v.0.14.11 *(newer version may also be compatible)
