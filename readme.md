@@ -82,7 +82,7 @@ Finally, navigate to the *services/truly* directory and open the **data.tf** fil
 Core resources are infrastructure components that may be leveraged by multiple services. These resources are deployed first as the Services are dependent upon them.
 
 ##### Logging Resources
-This module will deploy an encrypted S3 Bucket that can be used to store Access Log files from S3 and ALBs. Additionally, a KMS Key is provisioned for use in making secure connections to running Fargate services and shipping those session logs to CloudWatch. This allows users to interact with the Docker Container running on Fargate even though there is no host to to connect to.
+This module will deploy an encrypted S3 Bucket that can be used to store Access Log files from S3 and ALBs. Additionally, a KMS Key is provisioned for use in making secure connections to running Fargate services and shipping those session logs to CloudWatch. This allows users to interact with the Docker Container running on Fargate even though there is no host to connect to.
 
 To provision the Logging resources:
 1. Navigate to the *core/logging* directory in your terminal
@@ -96,7 +96,8 @@ To provision the Logging resources:
 ##### Route53 Hosted Zone
 In order to reach the service via a Public Domain, a Route53 Hosted Zone must be provisioned. This module will provision a Route53 Hosted Zone and output the Name Servers, which can be used to configure the domain.
 
-* **Note: this module may be skipped if you do not have a domain to to associate the Hosted Zone with. If this module is skipped, the *certificates* module should also be skipped.
+* **Note: this module may be skipped if you do not have a domain to to associate the Hosted Zone with. If this module is skipped, the *certificates* module should also be skipped.**
+
 **Note: if you are using a domain that is not registered with AWS Route53, ensure the hosted zone is configured as a sub-domain (i.e.sub.example.com *not* example.com.** 
 
 To provision the Route53 Hosted Zone:
