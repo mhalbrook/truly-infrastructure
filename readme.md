@@ -12,10 +12,9 @@
             * Updating the Terraform Back-End Configurations
         * Deploying the Core Infrastructure
             * Logging Resources
+            * Route53 Hosted Zone
             * Certificate
             * VPC
-            * Route53 Hosted Zone
-            * Route53 Hosted Zone
         * Deploying the Service Infrastructure
         * Building the Container Image
         * Testing
@@ -97,7 +96,7 @@ Finally, navigate to the *services/truly* directory and open the **data.tf** fil
 
 
 
-#### Deploying the Core
+#### Deploying the Core Infrastructure
 Core resources are infrastructure components that may be leveraged by multiple services. These resources are deployed first as the Services are dependent upon them.
 
 ##### Logging Resources
@@ -187,7 +186,8 @@ To provision the VPC:
                 terraform apply
 
 
-#### Deploying the Service
+
+#### Deploying the Service Infrastructure
 This module will deploy the resources required to build and run the service on ECS Fargate. A DNS Record will be provisioned and pointed at the ALB, which will load balance the ECS Fargate Service that runs the containerized application. Additionally, An AWS CodeBuild Project and Elastic Container Registry Repository will be provisioned to allow us to build and store the Docker Image.
 
 To provision the service:
