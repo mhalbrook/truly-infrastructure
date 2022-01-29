@@ -74,7 +74,7 @@ To update the Back-End configuration, open the **backend.tf** in each module, th
 
 Finally, navigate to the *services/truly* directory and open the **data.tf** file, then change the value of the *bucket* argument to the *backend_bucket_name Output* received after running *terraform apply* in the previous section.
 
-* **Note: All modules assume the use of the *Default* AWS Profile for authentication. To use a Custom Profile, replace *default* with the name of the Custom profile in the *profile* argument. Additionally, change the same argument within the *providers.tf* file of each module as well as in the **data.tf** file of the *services/truly* module.**
+* **Note: All modules assume the use of the *Default* AWS Profile for authentication. To use a Custom Profile, replace *default* with the name of the Custom profile in the *profile* argument. Additionally, change the same argument within the *providers.tf* file of each module as well as in the *data.tf* file of the *services/truly* module.**
 
 
 
