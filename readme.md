@@ -181,7 +181,13 @@ To provision the service:
 
 **If the **Hosted Zone** and **Certificates** sections were skipped:**
  
-3. Note the *load_balancer_domain_name* Output received after running *terraform apply* in the previous step. This is the domain that will be used to connect to the application in the *Testing the Application* and *Updating the Message* sections.
+3. Note the *load_balancer_domain_name* Output received after running *terraform apply* in the previous step. This is the domain that will be used to connect to the application in the *Testing the Application* and *Updating the Message* sections. the output will look similar to this:
+
+                Apply complete! Resources: 43 added, 0 changed, 0 destroyed.
+
+                Outputs:
+
+                load_balancer_domain_name = "truly-clojure-demo-alb-xxxxxxxxxxxx.us-east-1.elb.amazonaws.com"
 
 
 ### Building the Container
