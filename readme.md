@@ -1,5 +1,6 @@
 
 # Terraform Module | Truly-Clojure-Test Infrastructure
+current Version: 1.0.0
 
 ## Table of Contents
 
