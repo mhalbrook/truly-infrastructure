@@ -17,10 +17,10 @@
             * VPC
         * Deploying the Service Infrastructure
         * Building the Container Image
-        * Testing
-            * Testing the Application
-            * Updating the Message
-        * Tear Down
+    * Testing
+        * Testing the Application
+        * Updating the Message
+    * Tear Down
 
 
 ## Description
