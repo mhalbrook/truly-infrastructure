@@ -1,14 +1,35 @@
 
 # Terraform Module | Truly-Clojure-Test Infrastructure
 
+## Table of Contents
 
-## Usage
+##### Description
+###### AWS Resources
+##### Requirements
+##### Usage
+###### Deploying the Infrastructure
+####### Creating the Terraform Back-End
+######## Updating the Terraform Back-End Configurations
+####### Deploying the Core Infrastructure
+######## Logging Resources
+######## Certificate
+######## VPC
+######## Route53 Hosted Zone
+######## Route53 Hosted Zone
+####### Deploying the Service Infrastructure
+####### Building the Container Image
+###### Testing
+####### Testing the Application
+####### Updating the Message
+###### Tear Down
 
 
-### Description
+
+
+## Description
 This module deploys the infrastructure that hosts the truly-clojure-test service. 
 
-#### AWS Resources Deployed:
+### AWS Resources Provisioned:
 
     * S3 Bucket & KMS Key (for ALB Access Logs)
     * Route53 Public Hosted Zone
@@ -24,7 +45,6 @@ This module deploys the infrastructure that hosts the truly-clojure-test service
     * CloudWatch Log Group for Application Logs
     * Various IAM Roles and Policies (to support service permissions)
 
-
 ### Requirements:
     * Terraform v.0.14.11 *(newer version may also be compatible)
         * installation instructions can be found [here](https://learn.hashicorp.com/tutorials/terraform/install-cli).
@@ -37,6 +57,7 @@ This module deploys the infrastructure that hosts the truly-clojure-test service
     * Registered, Public Domain
         * This is not an actual requirement, however, without a registered domain, you will not be able to connect to the application over https and will instead need to connect via port 80 (http) to the domain of the Application Load Balancer that serves the application.
 
+## Usage
 
 ### Deploying the Infrastructure
 This module leverages the TerraServices module where the overall infrastructure is broken into multiple modules with references using Terraform Remote State. This lessens maintenance and allows teams to make small configuration changes quickly with less risk. With this structure, the initial infrastructure deployment is broken into steps with a specific order.
@@ -67,7 +88,7 @@ To provision the Terraform Back-End resources:
 
 
 
-#### Updating the Terraform Back-End Configurations
+##### Updating the Terraform Back-End Configurations
 Now that the Terraform Back-end resources are provisioned, the **backend.tf** file in each Terraform Module must be updated to specify that State Files are to be stored within the newly created Terraform Back-End S3 Bucket.
 
 To update the Back-End configuration, open the **backend.tf** in each module, then change the value of the *bucket* argument to the *backend_bucket_name Output* received after running *terraform apply* in the previous section.
@@ -190,7 +211,7 @@ To provision the service:
                 load_balancer_domain_name = "truly-clojure-demo-alb-xxxxxxxxxxxx.us-east-1.elb.amazonaws.com"
 
 
-### Building the Container
+### Building the Container Image
 Now that the supporting infrastructure is in place, we can use AWS CodeBuild to build and push the container image to AWS Elastic Container Registry (ECR). Once in ECR, the Fargate service will be able to pull and run the image.
 
 To build the image, run the following command from your terminal:
@@ -216,6 +237,8 @@ To build the image, run the following command from your terminal:
 
                 aws ecs update-service --cluster truly-clojure-demo --service truly-clojure-demo --force-new-deployment --region us-east-1 
 
+
+### Testing
 
 ### Testing the Application
 Once the container build has completed and Fargate has successfully launched the service, test the application by navigating to the domain that was configured in Step 3 of the **Certificate Section** in the browser of your choice. 
