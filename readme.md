@@ -259,7 +259,7 @@ Once the application functionality has been verified, the Terraform Modules may 
 
 To destroy the infrastructure, run the following commands in each module in the reverse order in which they were applied (i.e. starting with *service/truly* and ending with *backend*)
 
-* **Note: if you with to destroy and re-deploy the infrastructure, do not destroy the *core/logging* or *backend* modules. These modules provision S3 Buckers, which exist in a global namespace, therefore, it may take up tot 24 hours for the S3 Bucket names to become available again after destruction.**
+* **Note: if you wish to destroy, then re-deploy the infrastructure, do not destroy the *core/logging* or *backend* modules. These modules provision S3 Buckets, which exist in a global namespace, therefore, it may take up tot 24 hours for the S3 Bucket names to become available again after destruction.**
 
 commands for *services/truly* and *core/vpc*:
 
