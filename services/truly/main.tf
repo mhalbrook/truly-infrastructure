@@ -31,11 +31,11 @@ module "alb" {
   subnet_layer               = "public"
   deregistration_delay       = 5
   enable_deletion_protection = false
-  listeners                  = try(data.terraform_remote_state.certificates.outputs.truly_arn, null) == null ? {
+  listeners = try(data.terraform_remote_state.certificates.outputs.truly_arn, null) == null ? {
     80 = {
       target_group_name = "truly"
-      certificate_arns = []
-    } 
+      certificate_arns  = []
+    }
   } : null
   target_groups = {
     truly = {
@@ -71,10 +71,10 @@ module "alb" {
 # ECS Fargate Cluster
 ##########################################################
 module "ecs_cluster" {
-  source       = "./modules/ecs_cluster"
-  environment  = terraform.workspace
-  project      = var.project
-  cluster_name = var.service_name
+  source          = "./modules/ecs_cluster"
+  environment     = terraform.workspace
+  project         = var.project
+  cluster_name    = var.service_name
   enable_ecs_exec = true
 
   providers = {
@@ -104,7 +104,7 @@ module "truly" {
   load_balancer_arn            = module.alb.load_balancer_arn
   target_group_arn             = element(module.alb.target_group_arns, 0)
   load_balancer_security_group = element(module.alb.load_balancer_security_group_id, 0)
-  parameters                    = { for k, v in module.truly_parameters : k => v.ssm_arn }
+  parameters                   = { for k, v in module.truly_parameters : k => v.ssm_arn }
 
   providers = {
     aws.account = aws

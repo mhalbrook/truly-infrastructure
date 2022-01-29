@@ -31,11 +31,11 @@ variable "truly_parameters" {
   description = "Map of parameter values for truly-clojure-test-service"
   type        = map(any)
   default = {
-      "/appconfig/MESSAGE" = {
-        description = "Message displayed in the truly-clojure-test service response."
-        value       = "Hello Truly!"
-        tier        = "Standard"
-        service     = "clojure-demo"
-      }
+    "/appconfig/MESSAGE" = {
+      description = "Message displayed in the truly-clojure-test service response."
+      value       = "Hello Truly!"
+      tier        = "Standard"
+      service     = "clojure-demo"
+    }
   }
 }
