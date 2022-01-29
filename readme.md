@@ -4,12 +4,19 @@
 ## Table of Contents
 
 Description
+
 |- AWS Resources
+
 |- Requirements
+
 Usage
+
 |- Deploying the Infrastructure
+
 |-- Creating the Terraform Back-End
+
 |--- Updating the Terraform Back-End Configurations
+
 |--- Deploying the Core Infrastructure
 ######## Logging Resources
 ######## Certificate
