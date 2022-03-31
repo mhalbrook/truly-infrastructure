@@ -16,7 +16,7 @@ data "terraform_remote_state" "vpc" {
     bucket  = "us-east-1-halbromr-terraform-state-backend"
     key     = "core/vpc/terraform.tfstate"
     region  = "us-east-1"
-    profile = "default"
+    profile = "halbromr"
   }
 }
 
@@ -31,6 +31,6 @@ data "terraform_remote_state" "certificates" {
     bucket  = "us-east-1-halbromr-terraform-state-backend"
     key     = "core/certificates/terraform.tfstate"
     region  = "us-east-1"
-    profile = "default"
+    profile = "halbromr"
   }
 }

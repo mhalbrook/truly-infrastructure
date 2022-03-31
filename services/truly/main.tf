@@ -113,7 +113,7 @@ module "truly" {
 }
 
 module "truly_parameters" {
-  source       = "git::ssh://git@bitbucket.org/v-dso/ssm-parameter-store?ref=v2.0"
+  source       = "./modules/parameters"
   for_each     = var.truly_parameters
   environment  = terraform.workspace
   name         = each.key
